@@ -1,0 +1,58 @@
+1️⃣ Get Total Box Office Collection for the Movie?
+
+SELECT m.title, 
+       SUM(b.india_net_collection) AS total_india_net,
+       SUM(b.worldwide_collection) AS total_worldwide
+FROM Movies m
+JOIN BoxOffice b ON m.movie_id = b.movie_id
+WHERE m.movie_id = 1
+GROUP BY m.title;
+
+2️⃣Find the Best Performing Days (Top 5 Days by Collection) ?
+
+SELECT day_number,day_name, india_net_collection
+FROM BoxOffice
+WHERE movie_id = 1
+ORDER BY india_net_collection DESC
+LIMIT 5;
+
+3️⃣Calculate the Percentage Drop Between Weeks?
+
+SELECT week_number, week_collection, 
+       LAG(week_collection) OVER (ORDER BY week_number) AS prev_week,
+       ROUND(((week_collection - LAG(week_collection) OVER (ORDER BY week_number)) / 
+       LAG(week_collection) OVER (ORDER BY week_number)) * 100, 2) AS percentage_change
+FROM WeekCollection
+WHERE movie_id = 1;
+
+4️⃣Find the week with the highest total collection using RANK()?
+
+SELECT 
+    week_number, 
+    week_collection,
+    RANK() OVER (ORDER BY week_collection DESC) AS ranking
+FROM WeekCollection
+WHERE movie_id = 1;
+
+
+5️⃣Find the day with the Lowest collection?
+
+SELECT day_name, india_net_collection
+FROM BoxOffice
+WHERE india_net_collection = (SELECT Min(india_net_collection) FROM BoxOffice WHERE movie_id = 1);
+
+6) Write an SQL query to retrieve the following details of a movie:
+
+Movie Title,Director,Producer,IMDb Rating,Budget,Certification,Release Date ?
+
+SELECT 
+    movie_title, 
+    director, 
+    producer, 
+    imdb_rating, 
+    budget, 
+    certification, 
+    release_date
+FROM Movies
+WHERE movie_id = 1;
+
