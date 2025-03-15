@@ -1,0 +1,124 @@
+-- Table for general event details
+CREATE TABLE Events (
+    event_id INT PRIMARY KEY,
+    name VARCHAR(255),
+    location VARCHAR(255),
+    start_date DATE,
+    end_date DATE,
+    estimated_attendance INT
+);
+
+INSERT INTO Events (event_id, name, location, start_date, end_date, estimated_attendance) 
+VALUES 
+(1, 'Maha Kumbh Mela 2025', 'Prayagraj, India', '2025-01-13', '2025-04-26', 200000000);
+
+-- Table for important bathing dates
+CREATE TABLE Bathing_Days (
+    id INT PRIMARY KEY,
+    event_id INT,
+    bathing_day_name VARCHAR(255),
+    bathing_date DATE,
+    FOREIGN KEY (event_id) REFERENCES Events(event_id)
+);
+
+INSERT INTO Bathing_Days (id, event_id, bathing_day_name, bathing_date) 
+VALUES 
+(1, 1, 'Makar Sankranti', '2025-01-14'),
+(2, 1, 'Mauni Amavasya', '2025-02-09'),
+(3, 1, 'Basant Panchami', '2025-02-13'),
+(4, 1, 'Maghi Purnima', '2025-02-23'),
+(5, 1, 'Maha Shivratri', '2025-03-06');
+
+-- Table for accommodations
+CREATE TABLE Accommodations (
+    accommodation_id INT PRIMARY KEY,
+    event_id INT,
+    type VARCHAR(255),
+    capacity INT,
+    location VARCHAR(255),
+    FOREIGN KEY (event_id) REFERENCES Events(event_id)
+);
+
+INSERT INTO Accommodations (accommodation_id, event_id, type, capacity, location)
+VALUES 
+(1, 1, 'Tent City', 50000, 'Sector 15, Prayagraj'),
+(2, 1, 'Dharamshala', 10000, 'Sangam Area'),
+(3, 1, 'Hotel', 5000, 'Civil Lines, Prayagraj');
+
+-- Table for transport facilities
+CREATE TABLE Transport (
+    transport_id INT PRIMARY KEY,
+    event_id INT,
+    transport_mode VARCHAR(50),
+    availability VARCHAR(255),
+    nearest_station VARCHAR(255)
+);
+
+INSERT INTO Transport (transport_id, event_id, transport_mode, availability, nearest_station)
+VALUES 
+(1, 1, 'Railway', 'Special Trains Available', 'Prayagraj Junction'),
+(2, 1, 'Bus', 'Increased Frequency', 'ISBT Prayagraj'),
+(3, 1, 'Air', 'Chartered Flights & Helicopter Services', 'Prayagraj Airport');
+
+-- Table for security and health facilities
+CREATE TABLE Facilities (
+    facility_id INT PRIMARY KEY,
+    event_id INT,
+    type VARCHAR(255),
+    count INT,
+    description TEXT
+);
+
+INSERT INTO Facilities (facility_id, event_id, type, count, description)
+VALUES 
+(1, 1, 'Police Stations', 50, 'Temporary and permanent police booths'),
+(2, 1, 'Medical Camps', 100, 'Emergency first aid and mobile hospitals'),
+(3, 1, 'Lost & Found Centers', 20, 'Assistance for missing persons'),
+(4, 1, 'Fire Stations', 10, 'Emergency fire and rescue services');
+
+-- Table for cultural programs and spiritual discourses
+CREATE TABLE Cultural_Programs (
+    program_id INT PRIMARY KEY,
+    event_id INT,
+    program_name VARCHAR(255),
+    date DATE,
+    location VARCHAR(255),
+    description TEXT
+);
+
+INSERT INTO Cultural_Programs (program_id, event_id, program_name, date, location, description)
+VALUES 
+(1, 1, 'Ganga Aarti', '2025-01-15', 'Sangam Ghat', 'Spiritual aarti ceremony at sunset'),
+(2, 1, 'Kavi Sammelan', '2025-02-20', 'Main Stage, Sector 10', 'Poetry recitations and cultural performances'),
+(3, 1, 'Yoga Sessions', '2025-03-05', 'Yoga Kendra', 'Morning yoga and meditation sessions');
+
+-- Table for vendors and food stalls
+CREATE TABLE Vendors (
+    vendor_id INT PRIMARY KEY,
+    event_id INT,
+    name VARCHAR(255),
+    type VARCHAR(255),
+    location VARCHAR(255)
+);
+
+INSERT INTO Vendors (vendor_id, event_id, name, type, location)
+VALUES 
+(1, 1, 'Ganga Bhojanalaya', 'Food Stall', 'Sector 12'),
+(2, 1, 'Chaiwala Express', 'Tea & Snacks', 'Near Entry Gate'),
+(3, 1, 'Spiritual Books Store', 'Book Stall', 'Cultural Pavilion');
+
+-- Table for lost and found records
+CREATE TABLE Lost_Found (
+    report_id INT PRIMARY KEY,
+    event_id INT,
+    person_name VARCHAR(255),
+    age INT,
+    description TEXT,
+    status VARCHAR(50)
+);
+
+INSERT INTO Lost_Found (report_id, event_id, person_name, age, description, status)
+VALUES 
+(1, 1, 'Ram Kumar', 65, 'Wearing a white kurta, lost near Sector 5', 'Found'),
+(2, 1, 'Meena Sharma', 45, 'Lost near Sangam area', 'Searching'),
+(3, 1, 'Unknown Child', 7, 'Found crying near food court', 'Under Care');
